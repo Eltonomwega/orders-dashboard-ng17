@@ -13,11 +13,13 @@ import { RippleModule } from 'primeng/ripple';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { InputTextModule } from 'primeng/inputtext';
+import { ConfirmDialogModule } from 'primeng/confirmdialog'
 // Models
 import { Order } from '../../models/orders.model';
 import { NewOrderModalComponent } from '../new-order-modal/new-order-modal.component';
 import { BehaviorSubject } from 'rxjs';
 import { OrdersService } from '../../services/orders.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-orders-table',
@@ -32,6 +34,7 @@ import { OrdersService } from '../../services/orders.service';
     RippleModule,
     FontAwesomeModule,
     InputTextModule,
+    ConfirmDialogModule,
     NewOrderModalComponent
   ],
   templateUrl: './orders-table.component.html',
@@ -48,8 +51,12 @@ export class OrdersTableComponent implements OnInit {
   // Font Awesome icons
   faPlus = faPlus;
   faFilter = faFilter;
+  selectedOrder: Order | null = null;
+  isEditing: boolean = false;
+  deleteConfirmationVisible = false;
+  orderToDelete: Order | null = null;
 
-  constructor(private ordersService: OrdersService) {}
+  constructor(private ordersService: OrdersService, private confirmationService: ConfirmationService) {}
 
   ngOnInit(): void {
     this.ordersService.getOrders().subscribe(data => {
@@ -88,6 +95,55 @@ export class OrdersTableComponent implements OnInit {
     const currentOrders = this.ordersSubject.value;
     this.ordersSubject.next([...currentOrders, newOrder]);
   }
+
+  openEditDialog(order: Order): void {
+    this.selectedOrder = { ...order };
+    this.isEditing = true;
+    this.newOrderDialogVisible = true;
+  }
+
+  confirmDelete(order: Order): void {
+    this.orderToDelete = order;
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this order?',
+      header: 'Confirm Delete',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.performDelete(); // call your method here
+      }
+    });
+  }
+
+  onOrderUpdated(updated: Order): void {
+    const orders = this.ordersSubject.value.map(order =>
+      order.id === updated.id ? updated : order
+    );
+    this.ordersSubject.next(orders);
+  }
+
+  onDialogClosed(): void {
+    this.selectedOrder = null;
+    this.isEditing = false;
+  }
+
+  
+  performDelete(): void {
+    if (!this.orderToDelete) return;
+  
+    this.ordersService.deleteOrder(this.orderToDelete.id).subscribe(() => {
+      this.ordersSubject.next(
+        this.ordersSubject.value.filter(o => o.id !== this.orderToDelete!.id)
+      );
+      this.deleteConfirmationVisible = false;
+      this.orderToDelete = null;
+    });
+  }
+
+  openDialog() {
+    console.log("Hello")
+    this.newOrderDialogVisible = true;
+  }
+
   /**
    * View order details
    */

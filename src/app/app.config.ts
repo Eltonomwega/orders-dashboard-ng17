@@ -8,6 +8,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { provideHttpClient } from '@angular/common/http';
+import { ConfirmationService } from 'primeng/api';
 
 // Add all icons to the library
 library.add(fas);
@@ -15,6 +16,7 @@ library.add(fas);
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
+    ConfirmationService,
     provideRouter(routes),
     importProvidersFrom([FontAwesomeModule]),
     provideAnimationsAsync(),

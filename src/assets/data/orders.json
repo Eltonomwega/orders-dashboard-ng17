@@ -1,31 +1,6 @@
 {
   "orders": [
     {
-      "id": "ORD-1001",
-      "customer": {
-        "id": 101,
-        "name": "Sarah Johnson",
-        "email": "sarah.johnson@example.com",
-        "avatar": "https://randomuser.me/api/portraits/women/44.jpg",
-        "location": "New York, USA"
-      },
-      "date": "2023-05-15T09:30:00",
-      "amount": 125.99,
-      "status": "Delivered",
-      "paymentMethod": "Credit Card",
-      "trackingNumber": "UPS-789456123",
-      "estimatedDelivery": "2023-05-18",
-      "items": [
-        {
-          "productId": 2001,
-          "name": "Wireless Headphones",
-          "quantity": 1,
-          "price": 125.99,
-          "image": "https://example.com/products/headphones.jpg"
-        }
-      ]
-    },
-    {
       "id": "ORD-1002",
       "customer": {
         "id": 102,
@@ -537,16 +512,6 @@
       ]
     },
     {
-      "id": "e849",
-      "customer": {
-        "name": "reere",
-        "email": "erer"
-      },
-      "date": "2025-05-01T10:15:38.077Z",
-      "amount": 23232,
-      "status": "Pending"
-    },
-    {
       "id": "g8ty4wil",
       "customer": {
         "name": "Aiden Runolfsson",
@@ -564,35 +529,6 @@
           "productId": 311,
           "quantity": 3,
           "price": 2,
-          "image": "https://example.com/products/organizer.jpg"
-        }
-      ]
-    },
-    {
-      "id": "27062lts",
-      "customer": {
-        "name": "Elton Omwega",
-        "email": "omwega.el@gmail.com",
-        "avatar": "https://randomuser.me/api/portraits/men/71.jpg",
-        "location": "Nairobi"
-      },
-      "date": "2025-05-01T11:35:30.239Z",
-      "amount": 0,
-      "status": "Processing",
-      "paymentMethod": "PayPal",
-      "items": [
-        {
-          "name": "Lowell Zemlak",
-          "productId": 34454,
-          "quantity": 1,
-          "price": 2,
-          "image": "https://example.com/products/organizer.jpg"
-        },
-        {
-          "name": "ty",
-          "productId": 4554,
-          "quantity": 6,
-          "price": 0,
           "image": "https://example.com/products/organizer.jpg"
         }
       ]

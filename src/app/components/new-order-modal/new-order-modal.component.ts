@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter,OnInit, Input, Output, model } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OrdersService } from '../../services/orders.service';
 import { Order } from '../../models/orders.model';
@@ -18,10 +18,12 @@ import { ButtonModule } from 'primeng/button';
   styleUrls: ['./new-order-modal.component.css']
 })
 export class NewOrderModalComponent {
-  @Input() visible: boolean = false;
-  @Output() visibleChange = new EventEmitter<boolean>();
+  visible = model<boolean>(false);
   @Output() orderCreated = new EventEmitter<Order>();
-
+  @Input() order: Order | null = null;
+  @Output() orderUpdated = new EventEmitter<Order>();
+  @Output() closed = new EventEmitter<void>();
+  
   statusOptions = [
     { label: 'Pending', value: 'Pending' },
     { label: 'Processing', value: 'Processing' },
@@ -55,7 +57,12 @@ export class NewOrderModalComponent {
       items: this.fb.array([this.createItem()])
     });
   }
-
+ ngOnChanges(): void {
+    if (this.order){
+      console.log(this.order)
+      this.orderForm.patchValue(this.order);
+    }
+  }
   get items() {
     return this.orderForm.get('items') as any;
   }
@@ -101,11 +108,7 @@ export class NewOrderModalComponent {
     });
   }
 
-  open(): void {
-    this.visible = true;
-  }
-
   close(): void {
-    this.visible = false;
+    this.visible.set(false);
   }
 }
