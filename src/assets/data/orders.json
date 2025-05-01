@@ -1,5 +1,5 @@
-{ 
-    "orders":[
+{
+  "orders": [
     {
       "id": "ORD-1001",
       "customer": {
@@ -533,6 +533,133 @@
           "quantity": 1,
           "price": 11,
           "image": "https://example.com/products/cleaner.jpg"
+        }
+      ]
+    },
+    {
+      "id": "e849",
+      "customer": {
+        "name": "reere",
+        "email": "erer"
+      },
+      "date": "2025-05-01T10:15:38.077Z",
+      "amount": 23232,
+      "status": "Pending"
+    },
+    {
+      "id": "g8ty4wil",
+      "customer": {
+        "name": "Aiden Runolfsson",
+        "email": "your.email+fakedata13962@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/men/71.jpg",
+        "location": "Eum ad dolorem et."
+      },
+      "date": "2025-05-01T21:00:00.000Z",
+      "amount": 3,
+      "status": "Pending",
+      "paymentMethod": "Credit Card",
+      "items": [
+        {
+          "name": "Lowell Zemlak",
+          "productId": 311,
+          "quantity": 3,
+          "price": 2,
+          "image": "https://example.com/products/organizer.jpg"
+        }
+      ]
+    },
+    {
+      "id": "27062lts",
+      "customer": {
+        "name": "Elton Omwega",
+        "email": "omwega.el@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/men/71.jpg",
+        "location": "Nairobi"
+      },
+      "date": "2025-05-01T11:35:30.239Z",
+      "amount": 0,
+      "status": "Processing",
+      "paymentMethod": "PayPal",
+      "items": [
+        {
+          "name": "Lowell Zemlak",
+          "productId": 34454,
+          "quantity": 1,
+          "price": 2,
+          "image": "https://example.com/products/organizer.jpg"
+        },
+        {
+          "name": "ty",
+          "productId": 4554,
+          "quantity": 6,
+          "price": 0,
+          "image": "https://example.com/products/organizer.jpg"
+        }
+      ]
+    },
+    {
+      "id": "rhn43twz",
+      "customer": {
+        "name": "Bettye Anderson",
+        "email": "your.email+fakedata78761@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/men/71.jpg",
+        "location": "Magni aperiam ducimus quas facilis dicta."
+      },
+      "date": "2025-05-08T21:00:00.000Z",
+      "amount": 5,
+      "status": "Pending",
+      "paymentMethod": "Credit Card",
+      "items": [
+        {
+          "name": "Destini Beatty",
+          "productId": 47,
+          "quantity": 7,
+          "price": 6,
+          "image": "https://example.com/products/organizer.jpg"
+        }
+      ]
+    },
+    {
+      "id": "5pd3r218",
+      "customer": {
+        "name": "Karley Jacobs",
+        "email": "your.email+fakedata35971@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/men/71.jpg",
+        "location": "Aliquam quia officiis laudantium aut esse ducimus aliquam est nihil."
+      },
+      "date": "2025-05-13T21:00:00.000Z",
+      "amount": 5,
+      "status": "Pending",
+      "paymentMethod": "Credit Card",
+      "items": [
+        {
+          "name": "Kieran Leannon",
+          "productId": 488,
+          "quantity": 6,
+          "price": 5,
+          "image": "https://example.com/products/organizer.jpg"
+        }
+      ]
+    },
+    {
+      "id": "kd86aqwr",
+      "customer": {
+        "name": "Yoshiko Roberts",
+        "email": "your.email+fakedata25242@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/men/71.jpg",
+        "location": "Blanditiis architecto hic eaque."
+      },
+      "date": "2025-05-22T21:00:00.000Z",
+      "amount": 56,
+      "status": "Pending",
+      "paymentMethod": "Credit Card",
+      "items": [
+        {
+          "name": "Giuseppe Wilderman",
+          "productId": 313,
+          "quantity": 56,
+          "price": 56,
+          "image": "https://example.com/products/organizer.jpg"
         }
       ]
     }

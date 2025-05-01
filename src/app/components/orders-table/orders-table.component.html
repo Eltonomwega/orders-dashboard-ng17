@@ -29,7 +29,7 @@
   </div>
   <!-- Table content -->
   <p-table #dt
-  [value]="orders"
+  [value]="orders$ | async"
   [globalFilterFields]="['id', 'customer.name', 'customer.email', 'status']"
   [tableStyle]="{ 'min-width': '60rem' }"
   [paginator]="true"
@@ -88,6 +88,6 @@
 </div>
 
 <app-new-order-modal
-  [(visible)]="newOrderDialogVisible"
-  (orderCreated)="createOrder($event)"
+[(visible)]="newOrderDialogVisible"
+(orderCreated)="onOrderCreated($event)"
 ></app-new-order-modal>

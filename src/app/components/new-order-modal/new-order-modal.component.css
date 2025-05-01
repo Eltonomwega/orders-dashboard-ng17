@@ -1,0 +1,17 @@
+fieldset {
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .order-item {
+    background: #f9f9f9;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  

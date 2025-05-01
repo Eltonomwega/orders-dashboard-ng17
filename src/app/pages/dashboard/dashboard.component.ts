@@ -13,30 +13,13 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  orders: Order[] = [];
   loading = true;
   error: string | null = null;
   constructor(
-    private ordersService: OrdersService,
     public darkModeService: DarkModeService
   ) {}
 
   ngOnInit(): void {
-    this.loadOrders();
   }
 
-  loadOrders(): void {
-    this.loading = true;
-    this.ordersService.getOrders().subscribe({
-      next: (data) => {
-        this.orders = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching orders:', err);
-        this.error = 'Failed to load orders. Please try again.';
-        this.loading = false;
-      }
-    });
-  }
 }

@@ -16,6 +16,8 @@ import { InputTextModule } from 'primeng/inputtext';
 // Models
 import { Order } from '../../models/orders.model';
 import { NewOrderModalComponent } from '../new-order-modal/new-order-modal.component';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { OrdersService } from '../../services/orders.service';
 
 @Component({
   selector: 'app-orders-table',
@@ -36,7 +38,9 @@ import { NewOrderModalComponent } from '../new-order-modal/new-order-modal.compo
   styleUrls: ['./orders-table.component.css']
 })
 export class OrdersTableComponent implements OnInit {
-  @Input() orders: Order[] = [];
+  private ordersSubject = new BehaviorSubject<Order[]>([]);
+  orders$ = this.ordersSubject.asObservable();
+
   @ViewChild('dt') table!: Table;
 
   globalFilter: string = '';
@@ -45,9 +49,11 @@ export class OrdersTableComponent implements OnInit {
   faPlus = faPlus;
   faFilter = faFilter;
 
-  constructor() {}
+  constructor(private ordersService: OrdersService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.ordersService.getOrders().subscribe(data => this.ordersSubject.next(data));
+  }
 
   /**
    * Get severity class for status tag
@@ -75,12 +81,10 @@ export class OrdersTableComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     this.table.filterGlobal(input.value, 'contains');
   }
-  createOrder(order: any) {
-    const newId = this.orders.length > 0 ? Math.max(...this.orders.map(o => +o.id)) + 1 : 1;
-    this.orders.push({
-      id: newId.toString(),
-      ...order
-    });
+
+  onOrderCreated(newOrder: Order): void {
+    const currentOrders = this.ordersSubject.value;
+    this.ordersSubject.next([...currentOrders, newOrder]);
   }
   /**
    * View order details

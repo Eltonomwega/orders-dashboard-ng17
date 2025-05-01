@@ -3,31 +3,147 @@
   [(visible)]="visible"
   (onHide)="close()"
   [modal]="true"
-  [style]="{ width: '30rem' }"
+  [style]="{ width: '50vw', minWidth: '20rem', maxWidth: '40rem' }"
   [draggable]="false"
   [resizable]="false"
   [closable]="true"
   class="dark:bg-dark-200"
 >
   <div class="space-y-4">
-    <div>
-      <label class="block mb-1 font-medium">Customer Name</label>
-      <input type="text" pInputText [(ngModel)]="newOrder.customer.name" class="w-full" />
-    </div>
+    <form [formGroup]="orderForm" (ngSubmit)="submitOrder()" class="grid gap-4">
 
-    <div>
-      <label class="block mb-1 font-medium">Customer Email</label>
-      <input type="email" pInputText [(ngModel)]="newOrder.customer.email" class="w-full" />
+      <!-- Customer Details -->
+    <div [formGroupName]="'customer'">
+      <p-fieldset legend="Customer Information" [toggleable]="true" class="dark:border-dark-400">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="field">
+            <label for="name" class="block text-sm font-medium mb-1 dark:text-gray-300">Name</label>
+            <input pInputText id="name" formControlName="name" type="text" required
+                   class="w-full dark:bg-dark-300 dark:border-dark-400">
+          </div>
+          
+          <div class="field">
+            <label for="email" class="block text-sm font-medium mb-1 dark:text-gray-300">Email</label>
+            <input pInputText id="email" formControlName="email" type="email" required
+                   class="w-full dark:bg-dark-300 dark:border-dark-400">
+          </div>
+          
+          <div class="field">
+            <label for="avatar" class="block text-sm font-medium mb-1 dark:text-gray-300">Avatar URL</label>
+            <input pInputText id="avatar" formControlName="avatar" type="text"
+                   class="w-full dark:bg-dark-300 dark:border-dark-400">
+          </div>
+          
+          <div class="field">
+            <label for="location" class="block text-sm font-medium mb-1 dark:text-gray-300">Location</label>
+            <input pInputText id="location" formControlName="location" type="text"
+                   class="w-full dark:bg-dark-300 dark:border-dark-400">
+          </div>
+        </div>
+      </p-fieldset>
     </div>
+      <!-- Order Metadata -->
+      <p-fieldset legend="Order Details" [toggleable]="true" class="dark:border-dark-400">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="field">
+            <label for="date" class="block text-sm font-medium mb-1 dark:text-gray-300">Date</label>
+            <p-datePicker id="date"
+              formControlName="date"
+              [showIcon]="true"
+              [showButtonBar]="true"
+              inputId="date"
+              class="w-full dark:bg-dark-300 dark:border-dark-400">
+            </p-datePicker>
+          </div>
+          
+          <div class="field">
+            <label for="amount" class="block text-sm font-medium mb-1 dark:text-gray-300">Amount</label>
+            <p-inputNumber id="amount" formControlName="amount" mode="currency" currency="USD" [required]="true"
+                           class="w-full [&>div>input]:dark:bg-dark-300 [&>div>input]:dark:border-dark-400"></p-inputNumber>
+          </div>
+          
+          <div class="field">
+            <label for="status" class="block text-sm font-medium mb-1 dark:text-gray-300">Status</label>
+            <p-select id="status"
+                formControlName="status"
+                [options]="statusOptions"
+                optionLabel="label"
+                optionValue="value"
+                class="w-full dark:bg-dark-300 dark:border-dark-400">
+            </p-select>
+          </div>
+          
+          <div class="field">
+            <label for="paymentMethod" class="block text-sm font-medium mb-1 dark:text-gray-300">Payment Method</label>
+            <p-select id="paymentMethod"
+                formControlName="paymentMethod"
+                [options]="paymentOptions"
+                optionLabel="label"
+                optionValue="value"
+                class="w-full dark:bg-dark-300 dark:border-dark-400">
+            </p-select>
+          </div>
+        </div>
+      </p-fieldset>
 
-    <div>
-      <label class="block mb-1 font-medium">Amount</label>
-      <input type="number" pInputText [(ngModel)]="newOrder.amount" class="w-full" />
-    </div>
+      <!-- Order Items -->
+      <p-fieldset legend="Order Items" [toggleable]="true" class="dark:border-dark-400">
+        <div formArrayName="items" class="space-y-4">
+          <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="p-4 border rounded-lg dark:border-dark-400">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="field">
+                <label [for]="'name'+i" class="block text-sm font-medium mb-1 dark:text-gray-300">Product Name</label>
+                <input pInputText [id]="'name'+i" formControlName="name" type="text" required
+                       class="w-full dark:bg-dark-300 dark:border-dark-400">
+              </div>
+              
+              <div class="field">
+                <label [for]="'productId'+i" class="block text-sm font-medium mb-1 dark:text-gray-300">Product ID</label>
+                <input pInputText [id]="'productId'+i" formControlName="productId" type="number" required
+                       class="w-full dark:bg-dark-300 dark:border-dark-400">
+              </div>
+              
+              <div class="field">
+                <label [for]="'quantity'+i" class="block text-sm font-medium mb-1 dark:text-gray-300">Quantity</label>
+                <p-inputNumber [id]="'quantity'+i" formControlName="quantity" [min]="1" [required]="true"
+                               class="w-full [&>div>input]:dark:bg-dark-300 [&>div>input]:dark:border-dark-400"></p-inputNumber>
+              </div>
+              
+              <div class="field">
+                <label [for]="'price'+i" class="block text-sm font-medium mb-1 dark:text-gray-300">Price</label>
+                <p-inputNumber [id]="'price'+i" formControlName="price" mode="currency" currency="USD" [min]="0" [required]="true"
+                               class="w-full [&>div>input]:dark:bg-dark-300 [&>div>input]:dark:border-dark-400"></p-inputNumber>
+              </div>
+              
+              <div class="field md:col-span-2">
+                <label [for]="'image'+i" class="block text-sm font-medium mb-1 dark:text-gray-300">Image URL</label>
+                <input pInputText [id]="'image'+i" formControlName="image" type="text"
+                       class="w-full dark:bg-dark-300 dark:border-dark-400">
+              </div>
+            </div>
+            
+            <div class="mt-3 flex justify-end">
+              <button pButton type="button" label="Remove Item" icon="pi pi-trash" class="p-button-text p-button-danger p-button-sm"
+                      (click)="removeItem(i)"></button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <button pButton type="button" label="Add Item" icon="pi pi-plus" class="p-button-text p-button-sm"
+                  (click)="addItem()"></button>
+        </div>
+      </p-fieldset>
+
+      <!-- Submit -->
+      <div class="flex justify-end gap-2">
+        <button pButton type="submit" label="Create Order" icon="pi pi-check" class="p-button-primary"
+                [disabled]="orderForm.invalid"></button>
+      </div>
+    </form>
   </div>
 
   <ng-template pTemplate="footer">
-    <button pButton label="Cancel" class="p-button-text" (click)="close()"></button>
-    <button pButton label="Create" class="p-button-primary" (click)="createOrder()"></button>
+    <button pButton label="Cancel" icon="pi pi-times" class="p-button-text" (click)="close()"></button>
   </ng-template>
 </p-dialog>

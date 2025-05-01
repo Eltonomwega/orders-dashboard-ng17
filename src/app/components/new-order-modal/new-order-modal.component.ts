@@ -1,49 +1,111 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { OrdersService } from '../../services/orders.service';
+import { Order } from '../../models/orders.model';
 import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import {FieldsetModule} from 'primeng/fieldset';
+import {InputNumberModule} from 'primeng/inputnumber';
+import { DatePicker } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
+import {InputTextModule} from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-new-order-modal',
-  standalone: true,
-  imports: [CommonModule, DialogModule, InputTextModule, FormsModule],
-  templateUrl: './new-order-modal.component.html'
+  imports:[CommonModule, DialogModule, ReactiveFormsModule, FieldsetModule, InputNumberModule, InputTextModule, SelectModule, DatePicker, ButtonModule],
+  templateUrl: './new-order-modal.component.html',
+  styleUrls: ['./new-order-modal.component.css']
 })
 export class NewOrderModalComponent {
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
-  @Output() orderCreated = new EventEmitter<any>();
+  @Output() orderCreated = new EventEmitter<Order>();
 
-  newOrder = {
-    customer: {
-      name: '',
-      email: ''
-    },
-    date: new Date(),
-    amount: null,
-    status: 'Pending'
-  };
+  statusOptions = [
+    { label: 'Pending', value: 'Pending' },
+    { label: 'Processing', value: 'Processing' },
+    { label: 'Shipped', value: 'Shipped' },
+    { label: 'Delivered', value: 'Delivered' },
+    { label: 'Cancelled', value: 'Cancelled' },
+    { label: 'Returned', value: 'Returned' }
+  ];
 
-  createOrder() {
-    this.orderCreated.emit(this.newOrder);
-    this.close();
-    this.resetForm();
+  paymentOptions = [
+    { label: 'Credit Card', value: 'Credit Card' },
+    { label: 'PayPal', value: 'PayPal' },
+    { label: 'Bank Transfer', value: 'Bank Transfer' },
+    { label: 'Cash on Delivery', value: 'Cash on Delivery' }
+  ];
+
+  orderForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private ordersService: OrdersService) {
+    this.orderForm = this.fb.group({
+      customer: this.fb.group({
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        avatar: [''],
+        location: ['']
+      }),
+      date: [new Date(), Validators.required],
+      amount: [0, [Validators.required, Validators.min(0)]],
+      status: ['Pending', Validators.required],
+      paymentMethod: ['Credit Card', Validators.required],
+      items: this.fb.array([this.createItem()])
+    });
   }
 
-  close() {
-    this.visibleChange.emit(false);
+  get items() {
+    return this.orderForm.get('items') as any;
   }
 
-  private resetForm() {
-    this.newOrder = {
-      customer: {
-        name: '',
-        email: ''
-      },
-      date: new Date(),
-      amount: null,
-      status: 'Pending'
+  createItem(): FormGroup {
+    return this.fb.group({
+      name: ['', Validators.required],
+      productId: ['', Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      price: [0, [Validators.required, Validators.min(0)]],
+      image: ['']
+    });
+  }
+
+  addItem(): void {
+    this.items.push(this.createItem());
+  }
+
+  removeItem(index: number): void {
+    this.items.removeAt(index);
+  }
+  generateRandomId(): string {
+    return Math.random().toString(36).substring(2, 10); // e.g. "f3j4k1l9"
+  }
+  
+  submitOrder(): void {
+    if (this.orderForm.invalid) return;
+  
+    const newOrder: Order = {
+      id: this.generateRandomId(),
+      ...this.orderForm.value
     };
+  
+    this.ordersService.createOrder(newOrder).subscribe({
+      next: () => {
+        console.log('Order created successfully');
+        this.orderCreated.emit(newOrder);
+        this.orderForm.reset(); // or redirect / show message
+      },
+      error: (err) => {
+        console.error('Error creating order:', err);
+      }
+    });
+  }
+
+  open(): void {
+    this.visible = true;
+  }
+
+  close(): void {
+    this.visible = false;
   }
 }
