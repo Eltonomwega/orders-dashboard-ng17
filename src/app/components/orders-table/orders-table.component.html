@@ -29,7 +29,7 @@
   </div>
   <!-- Table content -->
   <p-table #dt
-  [value]="orders$ | async"
+  [value]="(orders$ | async)??[]"
   [globalFilterFields]="['id', 'customer.name', 'customer.email', 'status']"
   [tableStyle]="{ 'min-width': '60rem' }"
   [paginator]="true"
@@ -74,8 +74,6 @@
         </td>
         <td>
           <div class="flex gap-2">
-            <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-text" 
-                    pTooltip="View" tooltipPosition="top"></button>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text" 
                     pTooltip="Edit" tooltipPosition="top"></button>
             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" 

@@ -16,7 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 // Models
 import { Order } from '../../models/orders.model';
 import { NewOrderModalComponent } from '../new-order-modal/new-order-modal.component';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { OrdersService } from '../../services/orders.service';
 
 @Component({
@@ -52,7 +52,9 @@ export class OrdersTableComponent implements OnInit {
   constructor(private ordersService: OrdersService) {}
 
   ngOnInit(): void {
-    this.ordersService.getOrders().subscribe(data => this.ordersSubject.next(data));
+    this.ordersService.getOrders().subscribe(data => {
+      this.ordersSubject.next(data)
+    });
   }
 
   /**

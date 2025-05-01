@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import "primeicons/primeicons.css";
 /* Custom styles that can't be done with Tailwind */
 .sidebar {
   transition: all 0.3s ease;
