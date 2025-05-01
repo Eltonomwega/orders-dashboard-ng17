@@ -40,7 +40,7 @@ export class OrdersTableComponent implements OnInit {
   @ViewChild('dt') table!: Table;
 
   globalFilter: string = '';
-
+  newOrderDialogVisible = false;
   // Font Awesome icons
   faPlus = faPlus;
   faFilter = faFilter;
@@ -74,6 +74,13 @@ export class OrdersTableComponent implements OnInit {
   filterGlobal(event: Event) {
     const input = event.target as HTMLInputElement;
     this.table.filterGlobal(input.value, 'contains');
+  }
+  createOrder(order: any) {
+    const newId = this.orders.length > 0 ? Math.max(...this.orders.map(o => +o.id)) + 1 : 1;
+    this.orders.push({
+      id: newId.toString(),
+      ...order
+    });
   }
   /**
    * View order details
