@@ -17,7 +17,7 @@ export interface Customer {
   export interface Order {
     id: string;
     customer: Customer;
-    date: string;
+    date: Date;
     amount: number;
     status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled' | 'Returned';
     paymentMethod: 'Credit Card' | 'PayPal' | 'Bank Transfer' | 'Cash on Delivery';

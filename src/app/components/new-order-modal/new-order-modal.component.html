@@ -2,6 +2,7 @@
   header="Create New Order"
   [(visible)]="visible"
   [modal]="true"
+  (close)="close()"
   [style]="{ width: '50vw', minWidth: '20rem', maxWidth: '40rem' }"
   class="dark:bg-dark-200"
 >
@@ -133,7 +134,7 @@
 
       <!-- Submit -->
       <div class="flex justify-end gap-2">
-        <button pButton type="submit" label="Create Order" icon="pi pi-check" class="p-button-primary"
+        <button pButton type="submit" [label]="btnaction" icon="pi pi-check" class="p-button-primary"
                 [disabled]="orderForm.invalid"></button>
       </div>
     </form>

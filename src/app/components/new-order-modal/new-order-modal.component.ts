@@ -23,7 +23,8 @@ export class NewOrderModalComponent {
   @Input() order: Order | null = null;
   @Output() orderUpdated = new EventEmitter<Order>();
   @Output() closed = new EventEmitter<void>();
-  
+  btnaction = "";
+
   statusOptions = [
     { label: 'Pending', value: 'Pending' },
     { label: 'Processing', value: 'Processing' },
@@ -42,7 +43,7 @@ export class NewOrderModalComponent {
 
   orderForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private ordersService: OrdersService) {
+  constructor(private fb: FormBuilder) {
     this.orderForm = this.fb.group({
       customer: this.fb.group({
         name: ['', Validators.required],
@@ -58,8 +59,10 @@ export class NewOrderModalComponent {
     });
   }
  ngOnChanges(): void {
+    this.btnaction = "Create Order";
     if (this.order){
-      console.log(this.order)
+      this.btnaction = "Edit Order"
+      this.order.date = new Date(this.order.date)
       this.orderForm.patchValue(this.order);
     }
   }
@@ -85,30 +88,25 @@ export class NewOrderModalComponent {
     this.items.removeAt(index);
   }
   generateRandomId(): string {
-    return Math.random().toString(36).substring(2, 10); // e.g. "f3j4k1l9"
+    return Math.random().toString(36).substring(2, 10);
   }
   
   submitOrder(): void {
     if (this.orderForm.invalid) return;
-  
-    const newOrder: Order = {
-      id: this.generateRandomId(),
-      ...this.orderForm.value
-    };
-  
-    this.ordersService.createOrder(newOrder).subscribe({
-      next: () => {
-        console.log('Order created successfully');
-        this.orderCreated.emit(newOrder);
-        this.orderForm.reset(); // or redirect / show message
-      },
-      error: (err) => {
-        console.error('Error creating order:', err);
-      }
-    });
+    if (this.order) {
+      const updatedOrder = { ...this.order, ...this.orderForm.value };
+      this.orderUpdated.emit(updatedOrder);
+    } else {
+      const newOrder = this.orderForm.value;
+      this.orderCreated.emit(newOrder);
+    }
+    this.orderForm.reset();
+    this.close();
   }
 
   close(): void {
+    this.orderForm.reset();
+    this.order = null;
     this.visible.set(false);
   }
 }

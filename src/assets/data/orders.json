@@ -3,13 +3,12 @@
     {
       "id": "ORD-1002",
       "customer": {
-        "id": 102,
-        "name": "Michael Chen",
+        "name": "Michael Che",
         "email": "michael.chen@example.com",
         "avatar": "https://randomuser.me/api/portraits/men/32.jpg",
         "location": "San Francisco, USA"
       },
-      "date": "2023-05-14T14:15:00",
+      "date": "2023-05-14T11:15:00.000Z",
       "amount": 89.5,
       "status": "Shipped",
       "paymentMethod": "PayPal",
@@ -17,8 +16,8 @@
       "estimatedDelivery": "2023-05-17",
       "items": [
         {
-          "productId": 2002,
           "name": "Smart Watch",
+          "productId": 2002,
           "quantity": 1,
           "price": 89.5,
           "image": "https://example.com/products/smartwatch.jpg"
@@ -596,6 +595,28 @@
           "quantity": 56,
           "price": 56,
           "image": "https://example.com/products/organizer.jpg"
+        }
+      ]
+    },
+    {
+      "id": "q92c6oob",
+      "customer": {
+        "name": "Michael Che",
+        "email": "michael.chen@example.com",
+        "avatar": "https://randomuser.me/api/portraits/men/32.jpg",
+        "location": "San Francisco, USA"
+      },
+      "date": "2023-05-14T11:15:00.000Z",
+      "amount": 89.5,
+      "status": "Shipped",
+      "paymentMethod": "PayPal",
+      "items": [
+        {
+          "name": "Smart Watch",
+          "productId": 2002,
+          "quantity": 1,
+          "price": 89.5,
+          "image": "https://example.com/products/smartwatch.jpg"
         }
       ]
     }

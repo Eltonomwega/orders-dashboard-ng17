@@ -93,7 +93,9 @@ export class OrdersTableComponent implements OnInit {
 
   onOrderCreated(newOrder: Order): void {
     const currentOrders = this.ordersSubject.value;
-    this.ordersSubject.next([...currentOrders, newOrder]);
+    this.ordersService.createOrder(newOrder).subscribe(order=>{
+      this.ordersSubject.next([...currentOrders, order]);
+    })
   }
 
   openEditDialog(order: Order): void {
@@ -115,10 +117,12 @@ export class OrdersTableComponent implements OnInit {
   }
 
   onOrderUpdated(updated: Order): void {
-    const orders = this.ordersSubject.value.map(order =>
-      order.id === updated.id ? updated : order
-    );
-    this.ordersSubject.next(orders);
+    this.ordersService.updateOrder(updated.id,updated).subscribe(()=>{
+      const orders = this.ordersSubject.value.map(order =>
+        order.id === updated.id ? updated : order
+      );
+      this.ordersSubject.next(orders);
+    })
   }
 
   onDialogClosed(): void {
