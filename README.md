@@ -3,7 +3,10 @@
 ![Dashboard Preview](screenshot.png)
 
 A modern admin dashboard for e-commerce order management built with Angular, PrimeNG, and Tailwind CSS.
+## 🌐 Live Demo
 
+Experience the dashboard live:  
+🔗 [https://orders-dashboard-ng17-179l-git-main-eltonomwegas-projects.vercel.app](https://orders-dashboard-ng17-179l-git-main-eltonomwegas-projects.vercel.app)
 ## ✨ Features
 
 - **Order Management** (CRUD operations)
