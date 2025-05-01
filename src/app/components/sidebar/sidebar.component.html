@@ -1,0 +1,46 @@
+<div class="sidebar bg-white dark:bg-dark-200 w-64 border-r border-gray-200 dark:border-dark-400 flex flex-col">
+    <div class="p-4 border-b border-gray-200 dark:border-dark-400">
+      <h1 class="text-xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center">
+        <fa-icon [icon]="faStore" class="mr-2"></fa-icon>
+        <span>ShopEasy Admin</span>
+      </h1>
+    </div>
+    <nav class="flex-1 p-4 space-y-2">
+      <a href="#" class="flex items-center p-2 rounded-lg bg-indigo-50 dark:bg-dark-300 text-indigo-700 dark:text-indigo-400">
+        <fa-icon [icon]="faShoppingBag" class="mr-3"></fa-icon>
+        <span>Orders</span>
+      </a>
+      <a href="#" class="flex items-center p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-400">
+        <fa-icon [icon]="faUsers" class="mr-3"></fa-icon>
+        <span>Customers</span>
+      </a>
+      <a href="#" class="flex items-center p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-400">
+        <fa-icon [icon]="faBoxOpen" class="mr-3"></fa-icon>
+        <span>Products</span>
+      </a>
+      <a href="#" class="flex items-center p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-400">
+        <fa-icon [icon]="faChartLine" class="mr-3"></fa-icon>
+        <span>Analytics</span>
+      </a>
+      <a href="#" class="flex items-center p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-400">
+        <fa-icon [icon]="faCog" class="mr-3"></fa-icon>
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div class="p-4 border-t border-gray-200 dark:border-dark-400">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="w-8 h-8 rounded-full mr-3">
+          <div>
+            <p class="text-sm font-medium">Sarah Johnson</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Admin</p>
+          </div>
+        </div>
+        <div class="relative inline-block w-10 mr-2 align-middle select-none">
+          <input type="checkbox" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" 
+                 (click)="darkModeService.toggleDarkMode()" [checked]="darkModeService.darkMode">
+          <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+        </div>
+      </div>
+    </div>
+  </div>

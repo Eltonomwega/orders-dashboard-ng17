@@ -1,0 +1,33 @@
+<p-dialog
+  header="Create New Order"
+  [(visible)]="visible"
+  (onHide)="close()"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  class="dark:bg-dark-200"
+>
+  <div class="space-y-4">
+    <div>
+      <label class="block mb-1 font-medium">Customer Name</label>
+      <input type="text" pInputText [(ngModel)]="newOrder.customer.name" class="w-full" />
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium">Customer Email</label>
+      <input type="email" pInputText [(ngModel)]="newOrder.customer.email" class="w-full" />
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium">Amount</label>
+      <input type="number" pInputText [(ngModel)]="newOrder.amount" class="w-full" />
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button pButton label="Cancel" class="p-button-text" (click)="close()"></button>
+    <button pButton label="Create" class="p-button-primary" (click)="createOrder()"></button>
+  </ng-template>
+</p-dialog>

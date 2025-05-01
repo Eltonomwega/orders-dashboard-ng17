@@ -1,1 +1,69 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* Custom styles that can't be done with Tailwind */
+.sidebar {
+  transition: all 0.3s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-processing {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-shipped {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-delivered {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.dark .status-processing {
+  background-color: #5a4a1f;
+  color: #fef3c7;
+}
+
+.dark .status-shipped {
+  background-color: #1a4532;
+  color: #d1fae5;
+}
+
+.dark .status-delivered {
+  background-color: #1e3a8a;
+  color: #dbeafe;
+}
+
+.dark .status-cancelled {
+  background-color: #7f1d1d;
+  color: #fee2e2;
+}
+
+.toggle-checkbox:checked {
+  right: 0;
+  background-color: #4f46e5;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #312e81;
+}
+
+[x-cloak] { display: none !important; }

@@ -1,0 +1,93 @@
+<div class="bg-white dark:bg-dark-200 rounded-lg shadow-sm border border-gray-100 dark:border-dark-400 overflow-hidden mb-6">
+  <div class="p-4 border-b border-gray-200 dark:border-dark-400 flex items-center justify-between">
+    <h3 class="font-semibold">Recent Orders</h3>
+    <div class="flex space-x-2">
+      <button (click)="newOrderDialogVisible = true"
+        class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center">
+        <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
+        <span>New Order</span>
+      </button>
+      <button class="px-4 py-2 border border-gray-300 dark:border-dark-400 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-300 flex items-center">
+        <fa-icon [icon]="faFilter" class="mr-2"></fa-icon>
+        <span>Filter</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input 
+        type="text"
+        pInputText
+        [(ngModel)]="globalFilter"
+        (input)="filterGlobal($event)"
+        placeholder="Search orders..."
+        class="w-full md:w-80"
+      />
+    </span>
+  </div>
+  <!-- Table content -->
+  <p-table #dt
+  [value]="orders"
+  [globalFilterFields]="['id', 'customer.name', 'customer.email', 'status']"
+  [tableStyle]="{ 'min-width': '60rem' }"
+  [paginator]="true"
+  [rows]="5"
+  [rowsPerPageOptions]="[5, 10, 20]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} orders">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id">Order ID <p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="customer.name">Customer <p-sortIcon field="customer.name"></p-sortIcon></th>
+        <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+        <th pSortableColumn="amount">Amount <p-sortIcon field="amount"></p-sortIcon></th>
+        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-order>
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>
+          <div class="flex items-center">
+            <img 
+              [src]="order.customer.avatar" 
+              [alt]="order.customer.name"
+              class="w-8 h-8 rounded-full mr-2"
+              onerror="this.src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'"
+            />
+            <div>
+              <div class="font-medium">{{ order.customer.name }}</div>
+              <div class="text-xs text-gray-500">{{ order.customer.email }}</div>
+            </div>
+          </div>
+        </td>
+        <td>{{ order.date | date:'medium' }}</td>
+        <td>{{ order.amount | currency }}</td>
+        <td>
+          <p-tag 
+            [value]="order.status" 
+            [severity]="getStatusSeverity(order.status)"
+          ></p-tag>
+        </td>
+        <td>
+          <div class="flex gap-2">
+            <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-text" 
+                    pTooltip="View" tooltipPosition="top"></button>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text" 
+                    pTooltip="Edit" tooltipPosition="top"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" 
+                    pTooltip="Delete" tooltipPosition="top"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<app-new-order-modal
+  [(visible)]="newOrderDialogVisible"
+  (orderCreated)="createOrder($event)"
+></app-new-order-modal>
