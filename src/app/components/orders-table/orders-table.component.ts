@@ -144,31 +144,7 @@ export class OrdersTableComponent implements OnInit {
   }
 
   openDialog() {
-    console.log("Hello")
     this.newOrderDialogVisible = true;
   }
 
-  /**
-   * View order details
-   */
-  viewOrderDetails(order: Order): void {
-    console.log('View order:', order);
-    // Implement navigation to order details page
-  }
-
-  /**
-   * Edit order
-   */
-  editOrder(order: Order): void {
-    console.log('Edit order:', order);
-    // Implement edit order functionality
-  }
-
-  /**
-   * Delete order
-   */
-  deleteOrder(order: Order): void {
-    console.log('Delete order:', order);
-    // Implement delete order functionality
-  }
 }
